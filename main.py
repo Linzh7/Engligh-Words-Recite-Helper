@@ -62,7 +62,7 @@ if mode == '0':
     try:
         do(ls)
     except:
-        pass
+        print("Error!")
     with open('./单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
