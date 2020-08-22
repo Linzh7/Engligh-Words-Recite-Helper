@@ -29,6 +29,8 @@ def prints(element, degree):
 def do(ls):
     random.shuffle(ls)
     for element in ls:
+        if element[1] == '':
+            continue
         print('\033[1;33m', element[1], '\033[0m', end='           ')
         playsound('./Audio/' + element[1] + '.mp3')
         know = input()
@@ -41,6 +43,7 @@ def do(ls):
             prints(element, 2)
             element[3] = int(element[3]) + 2
         else:
+            prints(element, 0)
             break
 
 
@@ -52,20 +55,20 @@ with open('./单词.csv', 'r') as f:
         ls.append(i)
 
 mode = input("\033[1;35mMode: \033[0m")
-if mode == '0':
+if mode in ['0', '']:
     print('\033[1;35msum:', len(ls), '\033[0m')
     try:
         do(ls)
     except:
         print("Error: 001")
-    with open('./单词.csv', 'w') as f:
+    with open('/Users/Linzh/Local/English/单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
             if int(element[3]) < 3:
                 writer.writerow(element)
             else:
                 donels.append(element)
-    with open('./完成单词.csv', 'w') as f:
+    with open('./完成单词.csv', 'w+') as f:
         writer = csv.writer(f)
         for element in donels:
             writer.writerow(element)
@@ -84,7 +87,7 @@ elif mode == '9':
             file.flush()
         j += 1
     print('\033[1;33mSystem: MP3 Done.\033[0m')
-    with open('./单词.csv', 'w') as f:
+    with open('/Users/Linzh/Local/English/单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
             try:
