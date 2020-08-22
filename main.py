@@ -3,6 +3,8 @@ import random
 import requests
 from playsound import playsound
 
+path = '.'
+
 
 def trans(word):
     url = 'https://fanyi.baidu.com/sug'
@@ -32,7 +34,7 @@ def do(ls):
         if element[1] == '':
             continue
         print('\033[1;33m', element[1], '\033[0m', end='           ')
-        playsound('./Audio/' + element[1] + '.mp3')
+        playsound(path + '/Audio/' + element[1] + '.mp3')
         know = input()
         if know in ['\'', '']:
             prints(element, 0)
@@ -49,7 +51,7 @@ def do(ls):
 
 ls = []
 donels = []
-with open('./单词.csv', 'r') as f:
+with open(path + '/单词.csv', 'r') as f:
     lines = csv.reader(f)
     for i in lines:
         ls.append(i)
@@ -61,14 +63,14 @@ if mode in ['0', '']:
         do(ls)
     except:
         print("Error: 001")
-    with open('/Users/Linzh/Local/English/单词.csv', 'w') as f:
+    with open(path + '/单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
             if int(element[3]) < 3:
                 writer.writerow(element)
             else:
                 donels.append(element)
-    with open('./完成单词.csv', 'w+') as f:
+    with open(path + '/完成单词.csv', 'w+') as f:
         writer = csv.writer(f)
         for element in donels:
             writer.writerow(element)
@@ -81,13 +83,12 @@ elif mode == '9':
         res = requests.get('http://dict.youdao.com/dictvoice?type=0&audio=' +
                            i[1])
         music = res.content
-        with open('./Audio/' + i[1] + '.mp3',
-                  'wb') as file:
+        with open(path + '/Audio/' + i[1] + '.mp3', 'wb') as file:
             file.write(res.content)
             file.flush()
         j += 1
     print('\033[1;33mSystem: MP3 Done.\033[0m')
-    with open('/Users/Linzh/Local/English/单词.csv', 'w') as f:
+    with open(path + '/单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
             try:
