@@ -3,6 +3,23 @@ import random
 import requests
 from playsound import playsound
 
+
+def trans(word):
+    url = 'https://fanyi.baidu.com/sug'
+    headers = {
+        'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)'
+        'AppleWebKit 537.36 (KHTML, like Gecko) Chrome',
+        'Accept':
+        'text/html,application/xhtml+xml,application/xml;'
+        'q=0.9,image/webp,*/*;q=0.8'
+    }
+    Form_data = {'kw': word}
+    response = requests.post(url, data=Form_data, headers=headers)
+    res = response.json()['data'][0]['v']
+    return res
+
+
 def prints(element, tran, degree):
     print('\033[1;32m  ', element[2])
     print('  ', tran, '\033[0m')
@@ -46,14 +63,14 @@ if mode == '0':
         do(ls)
     except:
         pass
-    with open('/Users/Linzh/Local/English/单词.csv', 'w') as f:
+    with open('./单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
             if int(element[3]) < 3:
                 writer.writerow(element)
             else:
                 donels.append(element)
-    with open('/Users/Linzh/Local/English/完成单词.csv', 'w') as f:
+    with open('./完成单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in donels:
             writer.writerow(element)
@@ -66,9 +83,8 @@ elif mode == '9':
         res = requests.get('http://dict.youdao.com/dictvoice?type=0&audio=' +
                            i[1])
         music = res.content
-        with open('/Users/Linzh/Local/English/' + i[1] + '.mp3', 'wb') as file:
+        with open('./' + i[1] + '.mp3', 'wb') as file:
             file.write(res.content)
             file.flush()
         j += 1
     print('done.')
-
