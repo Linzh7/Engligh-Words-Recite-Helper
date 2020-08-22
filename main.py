@@ -21,8 +21,7 @@ def trans(word):
 
 
 def prints(element, tran, degree):
-    print('\033[1;32m  ', element[2])
-    print('  ', tran, '\033[0m')
+    print('\033[1;32m  ', tran, '\033[0m')
     print('\033[1;34m   熟练度:', element[3], '+', degree, '\033[0m')
     print()
 
@@ -34,6 +33,7 @@ def do(ls):
         playsound('/Users/Linzh/Local/English/' + element[1] + '.mp3')
         try:
             tran = trans(element[1])
+            element[2] = tran
         except:
             tran = 'ERROR'
         know = input()
