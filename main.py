@@ -21,7 +21,7 @@ def trans(word):
 
 
 def prints(element, tran, degree):
-    print('\033[1;32m  ', tran, '\033[0m')
+    print('\033[1;32m  ', element[2], '\033[0m')
     print('\033[1;34m   熟练度:', element[3], '+', degree, '\033[0m')
     print()
 
@@ -31,19 +31,14 @@ def do(ls):
     for element in ls:
         print('\033[1;33m', element[1], '\033[0m', end='           ')
         playsound('/Users/Linzh/Local/English/' + element[1] + '.mp3')
-        try:
-            tran = trans(element[1])
-            element[2] = tran
-        except:
-            tran = 'ERROR'
         know = input()
         if know in ['\'', '']:
-            prints(element, tran, 0)
+            prints(element, 0)
         elif know in [';', '.']:
-            prints(element, tran, 1)
+            prints(element, 1)
             element[3] = int(element[3]) + 1
         elif know in [';;', '..']:
-            prints(element, tran, 2)
+            prints(element, 2)
             element[3] = int(element[3]) + 2
         else:
             break
