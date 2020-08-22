@@ -20,7 +20,7 @@ def trans(word):
     return res
 
 
-def prints(element, tran, degree):
+def prints(element, degree):
     print('\033[1;32m  ', element[2], '\033[0m')
     print('\033[1;34m   熟练度:', element[3], '+', degree, '\033[0m')
     print()
@@ -30,7 +30,7 @@ def do(ls):
     random.shuffle(ls)
     for element in ls:
         print('\033[1;33m', element[1], '\033[0m', end='           ')
-        playsound('/Users/Linzh/Local/English/' + element[1] + '.mp3')
+        playsound('./Audio/' + element[1] + '.mp3')
         know = input()
         if know in ['\'', '']:
             prints(element, 0)
@@ -46,7 +46,7 @@ def do(ls):
 
 ls = []
 donels = []
-with open('/Users/Linzh/Local/English/单词.csv', 'r') as f:
+with open('./单词.csv', 'r') as f:
     lines = csv.reader(f)
     for i in lines:
         ls.append(i)
@@ -57,7 +57,7 @@ if mode == '0':
     try:
         do(ls)
     except:
-        print("Error!")
+        print("Error: 001")
     with open('./单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
@@ -78,8 +78,20 @@ elif mode == '9':
         res = requests.get('http://dict.youdao.com/dictvoice?type=0&audio=' +
                            i[1])
         music = res.content
-        with open('./' + i[1] + '.mp3', 'wb') as file:
+        with open('./Audio/' + i[1] + '.mp3',
+                  'wb') as file:
             file.write(res.content)
             file.flush()
         j += 1
-    print('done.')
+    print('\033[1;33mSystem: MP3 Done.\033[0m')
+    with open('./单词.csv', 'w') as f:
+        writer = csv.writer(f)
+        for element in ls:
+            try:
+                element[2] = trans(element[1])
+                print(element[1], element[2])
+            except:
+                element[2] = 'NULL'
+                print('\033[1;33mSystem: Error, ', element[1], '\033[0m"')
+            writer.writerow(element)
+    print('\033[1;33mSystem: Translates Done.\033[0m')
