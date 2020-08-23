@@ -70,14 +70,14 @@ if mode in ['0', '']:
                 writer.writerow(element)
             else:
                 donels.append(element)
-    with open(path + '/完成单词.csv', 'w+') as f:
+    with open(path + '/完成单词.csv', 'a+') as f:
         writer = csv.writer(f)
         for element in donels:
             writer.writerow(element)
-    print("\033[1;33mSystem: Saved.\033[0m")
+    print("\033[1;33m[System]Saved.\033[0m")
 
 elif mode == '9':
-    j = 0
+    j = 1
     for i in ls:
         print("{}: {}".format(j, i[1]))
         res = requests.get('http://dict.youdao.com/dictvoice?type=0&audio=' +
@@ -87,15 +87,17 @@ elif mode == '9':
             file.write(res.content)
             file.flush()
         j += 1
-    print('\033[1;33mSystem: MP3 Done.\033[0m')
+    print('\033[1;33m[System]MP3 Done.\033[0m')
     with open(path + '/单词.csv', 'w') as f:
         writer = csv.writer(f)
         for element in ls:
+            if element[3] == '':
+                element[3] = '0'
             try:
                 element[2] = trans(element[1])
                 print(element[1], element[2])
             except:
                 element[2] = 'NULL'
-                print('\033[1;33mSystem: Error, ', element[1], '\033[0m"')
+                print('\033[1;33m[System]Error: ', element[1], '\033[0m"')
             writer.writerow(element)
-    print('\033[1;33mSystem: Translates Done.\033[0m')
+    print('\033[1;33m[System]Translates Done.\033[0m')
