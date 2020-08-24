@@ -1,11 +1,10 @@
 import csv
 import random
 import requests
-import os
 from playsound import playsound
 
 # filepath
-path = os.getcwd()
+path = '.'
 
 
 # get translated text from baidu
@@ -89,7 +88,7 @@ if mode in ['0', '']:
         writer = csv.writer(f)
         for element in donels:
             writer.writerow(element)
-    print("\033[1;33m[System]Saved.\033[0m")
+    print("\033[1;33m[System] Saved.\033[0m")
 
 # modify mode
 elif mode == '9':
@@ -104,7 +103,7 @@ elif mode == '9':
             file.write(res.content)
             file.flush()
         j += 1
-    print('\033[1;33m[System]MP3 Done.\033[0m')
+    print('\033[1;33m[System] MP3 files Done.\033[0m')
 
     # translate and format
     with open(path + '/单词.csv', 'w') as f:
@@ -121,4 +120,4 @@ elif mode == '9':
                 element[2] = 'NULL'
                 print('\033[1;33m[System]Error: ', element[1], '\033[0m"')
             writer.writerow(element)
-    print('\033[1;33m[System]Translates Done.\033[0m')
+    print('\033[1;33m[System] Translates Done.\033[0m')
